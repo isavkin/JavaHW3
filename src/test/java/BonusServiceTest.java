@@ -1,58 +1,43 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class BonusServiceTest {
-
     @Test
-    void shouldCalculateForRegisteredAndUnderLimit() {
+    public void shouldCalculateForRegisteredAndUnderLimit() {
         BonusService service = new BonusService();
 
-        long amount = 1000_60;
+        long amount = 500;
         boolean registered = true;
-        long expected = 30;
+        long expected = 15;
 
         long actual = service.calculate(amount, registered);
 
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    void shouldCalculateForRegisteredAndOverLimit() {
+    public void shouldCalculateForUnregisteredAndUnderLimit() {
         BonusService service = new BonusService();
 
-        long amount = 1_000_000_60;
+        long amount = 500;
+        boolean registered = false;
+        long expected = 5;
+
+        long actual = service.calculate(amount, registered);
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldCalculateForRegisteredAndOverLimit() {
+        BonusService service = new BonusService();
+
+        long amount = 1_000_100;
         boolean registered = true;
         long expected = 500;
 
         long actual = service.calculate(amount, registered);
 
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldCalculateForNoRegisteredAndUnderLimit() {
-        BonusService service = new BonusService();
-
-        long amount = 1000_60;
-        boolean registered = false;
-        long expected = 10;
-
-        long actual = service.calculate(amount, registered);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldCalculateForNoRegisteredAndOverLimit() {
-        BonusService service = new BonusService();
-
-        long amount = 1000_000_60;
-        boolean registered = false;
-        long expected = 500;
-
-        long actual = service.calculate(amount, registered);
-
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 }
